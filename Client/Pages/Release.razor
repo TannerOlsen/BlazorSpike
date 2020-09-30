@@ -1,0 +1,33 @@
+﻿@page "/releases/{Id:int}"
+@*@using BlazorSpike.Shared*@
+@inject HttpClient Http
+
+@if (release == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <NavLink class="nav-link" href=@($"releases/{release.Id}")>
+        <h3>Release @release.Id</h3>
+
+        <p>Name: @release.Name</p>
+        <p>Notes: @release.Notes</p>
+    </NavLink>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    [Parameter]
+    public BlazorSpike.Shared.Release release { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (release == null)
+        {
+            release = await Http.GetFromJsonAsync<BlazorSpike.Shared.Release>("api/Releases/" + Id);
+        }
+    }
+}

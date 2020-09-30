@@ -1,0 +1,8 @@
+﻿@page "/counterwithstate"
+@inject BlazorSpike.Client.Services.CounterWithStateService svc;
+
+<h1>Counter With State</h1>
+
+<p>Current count: @svc.Count</p>
+
+<button class="btn btn-primary" @onclick="svc.Increment">Click me</button>

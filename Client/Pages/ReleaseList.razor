@@ -1,0 +1,29 @@
+﻿@page "/releases"
+@inject HttpClient Http
+
+<h3>Releases</h3>
+
+@if (releases == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <ul class="nav flex-column">
+        @foreach (var release in releases)
+        {
+            <li class="nav-item px-3">
+                <Release release="release"/>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private BlazorSpike.Shared.Release[] releases;
+
+    protected override async Task OnInitializedAsync()
+    {
+        releases = await Http.GetFromJsonAsync<BlazorSpike.Shared.Release[]>("api/Releases");
+    }
+}
